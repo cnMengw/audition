@@ -106,7 +106,7 @@
                 let tasks = [];
                 let data = [];
 
-                tasks = mkyData[0].data.map(it => {
+                tasks = mkyData[num].data.map(it => {
                     return {
                         name: `${it.classroomName}.mp4`,
                         url: it.url
@@ -126,7 +126,7 @@
                 let tasks = [];
                 let data = [];
 
-                tasks = mkyData[0].data.map(it => {
+                tasks = mkyData[num].data.map(it => {
                     let time = it.startTime.split(' ');
                     time = time[0]; // 时间
                     return {

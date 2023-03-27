@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>down</title>
+    <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="https://open.thunderurl.com/thunder-link.js"></script>
+    <script src="./mock/mky-heji.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .mk-con{
+            padding: 16px;
+        }
+        .mk-con .row{
+            margin-bottom: 32px;
+        }
+        .mk-con .row .title{
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .mk-con .row .xlDown,.xlDown-date{
+            display: inline-block;
+            line-height: 1;
+            white-space: nowrap;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            color: #606266;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            margin: 0;
+            transition: .1s;
+            font-weight: 500;
+            padding: 6px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #409eff;
+            border-color: #409eff;
+            margin-left: 8px;
+        }
+        .mk-con .row .list{
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mk-con">
+
+    </div>
+    <script>
+        const xlDown = function(e){
+            console.log(12);
+            return;
+            let tasks = [];
+            let data = [];
+
+            tasks = data.map(it => {
+                let time = it.startTime.split(' ');
+                time = time[0]; // 时间
+                let nums = it.classroomName.split(' ');
+                nums = nums[1]; // 次数
+                return {
+                    name: `${time} G7S寒 ${nums}.mp4`,
+                    url: it.url
+                }
+            });
+
+            // 创建单个任务
+            let thunderLink = window.thunderLink;
+            thunderLink.newTask({
+                tasks: tasks
+            })
+        }
+
+        const init = () => {
+            let str = '';
+            mkyData.forEach((it, ind) => {
+                str += `<div class='row'>
+                    <div class='title'>
+                        <span>课程名称：${it.title}</span>
+                        <span class="xlDown" num="${ind}">迅雷下载</span>
+                        <span class="xlDown-date" num="${ind}">迅雷下载-带日期</span>
+                    </div>
+                    ${
+                        it.data.map((it2) => {
+                            return `<div class='list'>
+                                讲次列表：${it2.classroomName}
+                            </div>`
+                        })
+                    }
+                </div>`
+            });
+            str = str.replace(/,/g, '')
+            $('.mk-con').append(str);
+
+            // down
+            $('.xlDown').bind('click', function(e) {
+                let num = e.target.getAttribute('num');
+                let tasks = [];
+                let data = [];
+
+                tasks = mkyData[num].data.map(it => {
+                    return {
+                        name: `${it.classroomName}.mp4`,
+                        url: it.url
+                    }
+                });
+
+                // 创建单个任务
+                let thunderLink = window.thunderLink;
+                thunderLink.newTask({
+                    tasks: tasks
+                })
+            });
+
+            // down
+            $('.xlDown-date').bind('click', function(e) {
+                let num = e.target.getAttribute('num');
+                let tasks = [];
+                let data = [];
+
+                tasks = mkyData[num].data.map(it => {
+                    let time = it.startTime.split(' ');
+                    time = time[0]; // 时间
+                    return {
+                        name: `${it.classroomName}-${time}.mp4`,
+                        url: it.url
+                    }
+                });
+
+                // 创建单个任务
+                let thunderLink = window.thunderLink;
+                thunderLink.newTask({
+                    tasks: tasks
+                })
+            });
+        }
+        init();
+    </script>
+    
+</body>
+</html>

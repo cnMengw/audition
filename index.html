@@ -107,12 +107,30 @@
                 let data = [];
 
                 tasks = mkyData[0].data.map(it => {
-                    // let time = it.startTime.split(' ');
-                    // time = time[0]; // 时间
-                    // let nums = it.classroomName.split(' ');
-                    // nums = nums[1]; // 次数
                     return {
                         name: `${it.classroomName}.mp4`,
+                        url: it.url
+                    }
+                });
+
+                // 创建单个任务
+                let thunderLink = window.thunderLink;
+                thunderLink.newTask({
+                    tasks: tasks
+                })
+            });
+
+            // down
+            $('.xlDown-date').bind('click', function(e) {
+                let num = e.target.getAttribute('num');
+                let tasks = [];
+                let data = [];
+
+                tasks = mkyData[0].data.map(it => {
+                    let time = it.startTime.split(' ');
+                    time = time[0]; // 时间
+                    return {
+                        name: `${it.classroomName}-${time}.mp4`,
                         url: it.url
                     }
                 });
